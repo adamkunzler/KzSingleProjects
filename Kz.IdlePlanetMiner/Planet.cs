@@ -9,11 +9,13 @@ namespace Kz.IdlePlanetMiner
         private uint _id;
         private Vector2f _position;
         private Sprite _sprite;
+        private float _rotation;
 
-        public Planet(uint id, Vector2f position)
+        public Planet(uint id, Vector2f position, float rotation)
         {
             _id = id;
             _position = position;
+            _rotation = rotation;
             _sprite = new Sprite(
                 $"Resources/Planets/{_id:000}.png",
                 new List<uint> { 6, 9, 11 }.Contains(_id) ? new Vector2f(256, 256) : new Vector2f(128, 128),
@@ -32,7 +34,7 @@ namespace Kz.IdlePlanetMiner
 
         public void Render()
         {
-            _sprite.Render(_position);
+            _sprite.Render(_position, _rotation);
         }
 
         #endregion Public Methods

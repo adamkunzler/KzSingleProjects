@@ -16,6 +16,7 @@ namespace Kz.IdlePlanetMiner
         public RenderTexture2D Texture => throw new NotImplementedException();
         public Texture2D _background;
 
+        private SpaceStation _spaceStation;
         private List<Planet> _planets = [];
 
         public Game(WindowSettings settings)
@@ -25,7 +26,8 @@ namespace Kz.IdlePlanetMiner
             // 00 or 04
             _background = Raylib.LoadTexture("Resources/background_04.png");
 
-            GeneratePlanets(17);
+            _spaceStation = new SpaceStation(new Vector2f(_settings.HalfScreenWidth, _settings.HalfScreenHeight));
+            GeneratePlanets(7);
         }
 
         #endregion ctor
@@ -39,6 +41,8 @@ namespace Kz.IdlePlanetMiner
 
         public void Update()
         {
+            _spaceStation.Update();
+
             foreach(var planet in _planets)
             {
                 planet.Update();
@@ -48,13 +52,17 @@ namespace Kz.IdlePlanetMiner
         public void Render()
         {
             // render background
-            for(var y =-_settings.ScreenWidth; y <= _settings.ScreenWidth; y += _settings.ScreenWidth)
+            var xSize = 4.0f * _settings.ScreenWidth;
+            var ySize = 4.0f * _settings.ScreenHeight;
+            for(var y =-ySize; y <= ySize; y += _settings.ScreenHeight)
             {
-                for (var x = -_settings.ScreenWidth; x <= _settings.ScreenWidth; x += _settings.ScreenWidth)
+                for (var x = -xSize; x <= xSize; x += _settings.ScreenWidth)
                 {
-                    Raylib.DrawTexture(_background, x, y, Color.White);
+                    Raylib.DrawTexture(_background, (int)x, (int)y, Color.White);
                 }
             }
+
+            _spaceStation.Render();
 
             // render planets
             foreach (var planet in _planets)
@@ -94,7 +102,7 @@ namespace Kz.IdlePlanetMiner
                 var x = coord.X + _settings.HalfScreenWidth;
                 var y = coord.Y + _settings.HalfScreenHeight;
                 
-                var planet = new Planet((uint)numPlanets+1, new Vector2f(x, y));
+                var planet = new Planet((uint)numPlanets+1, new Vector2f(x, y), (float)_random.Next(-360, 360));
                 //var planet = new Planet(11, new Vector2f(x, y), radius);
                 _planets.Add(planet);
 

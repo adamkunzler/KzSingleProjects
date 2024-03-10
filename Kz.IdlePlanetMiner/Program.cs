@@ -2,6 +2,8 @@
 // https://github.com/ChrisDill/Raylib-cs
 // dotnet add package Raylib-cs
 
+using Kz.Engine.DataStructures;
+using Kz.Engine.General;
 using Kz.IdlePlanetMiner;
 using Raylib_cs;
 using System.Numerics;
@@ -10,6 +12,9 @@ using Color = Raylib_cs.Color;
 internal class Program
 {
     private static Camera2D _camera;
+    private static Vector2 _dragStart = new Vector2(0, 0);
+    private static bool _isDragging = false;
+
     public static void Main()
     {
         //
@@ -34,7 +39,7 @@ internal class Program
         // MAIN RENDER LOOP
         //
         while (!Raylib.WindowShouldClose())    // Detect window close button or ESC key
-        {            
+        {
             ProcessInputs(settings, game);
 
             Update(settings, game);
@@ -47,17 +52,17 @@ internal class Program
     }
 
     private static void Render(WindowSettings settings, IGame game)
-    {        
+    {
         Raylib.BeginDrawing();
         Raylib.ClearBackground(Color.Black);
-        
+
         Raylib.BeginMode2D(_camera);
-        game.Render();        
+        game.Render();
         Raylib.EndMode2D();
-        
+
         Raylib.DrawFPS(10, 10);
         Raylib.DrawText($"Zoom: {_camera.Zoom:0.00}", 10, 35, 20, Color.RayWhite);
-        
+
         Raylib.EndDrawing();
     }
 
@@ -66,13 +71,45 @@ internal class Program
         game.Update();
     }
 
-    private static void ProcessInputs(WindowSettings settings, IGame game)
-    {
-        // Camera zoom controls
-        _camera.Zoom += Raylib.GetMouseWheelMove() * 0.05f;
-        if (_camera.Zoom > 5.0f) _camera.Zoom = 5.0f;
-        else if (_camera.Zoom < 0.5f) _camera.Zoom = 0.5f;
+    
 
+    private static void ProcessInputs(WindowSettings settings, IGame game)
+    {        
+        #region Camera Zoom
+
+        var zoomMin = 0.1f;
+        var zoomMax = 10.0f;
+        var zoomSpeed = Utils.RangeMap(_camera.Zoom, zoomMin, zoomMax, 0.001f, 0.5f);
+        
+        _camera.Zoom += Raylib.GetMouseWheelMove() * zoomSpeed;
+        if (_camera.Zoom > zoomMax) _camera.Zoom = zoomMax;
+        else if (_camera.Zoom < zoomMin) _camera.Zoom = zoomMin;
+
+        #endregion Camera Zoom
+
+        #region Camera Pan
+
+        // Update
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+        {
+            _dragStart = Raylib.GetMousePosition();
+            _isDragging = true;
+        }
+
+        if (Raylib.IsMouseButtonDown(MouseButton.Left) && _isDragging)
+        {
+            var dragEnd = Raylib.GetMousePosition();
+            var dragDelta = Vector2.Subtract(_dragStart, dragEnd) * (1.0f /_camera.Zoom);
+            _camera.Target = Vector2.Add(_camera.Target, dragDelta);
+            _dragStart = dragEnd;
+        }
+
+        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
+        {
+            _isDragging = false;
+        }
+
+        #endregion Camera Pan
 
         if (Raylib.IsKeyPressed(KeyboardKey.Space))
         {
@@ -80,18 +117,5 @@ internal class Program
         }
 
         game.ProcessInputs();
-    }
-        
-    private static void RenderTextureToWindow(RenderTexture2D target, int windowWidth, int windowHeight)
-    {
-        var src = new Rectangle(0, 0, target.Texture.Width, -target.Texture.Height);
-        var dest = new Rectangle(0, 0, windowWidth, windowHeight);
-        Raylib.DrawTexturePro(
-            target.Texture,
-            src,
-            dest,
-            new System.Numerics.Vector2(0.0f, 0.0f),
-            0,
-            Color.White);
     }
 }

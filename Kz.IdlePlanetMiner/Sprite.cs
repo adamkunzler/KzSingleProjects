@@ -52,7 +52,7 @@ namespace Kz.IdlePlanetMiner
             }
         }
 
-        public void Render(Vector2f position)
+        public void Render(Vector2f position, float rotation)
         {            
             var x = _currentFrame.X * _size.X;
             var y = _currentFrame.Y * _size.Y;
@@ -60,7 +60,7 @@ namespace Kz.IdlePlanetMiner
             var source = new Rectangle(x, y, _size.X, _size.Y);
             var dest = new Rectangle(position.X, position.Y, _size.X, _size.Y);
             var origin = new Vector2(_size.X / 2.0f, _size.Y / 2.0f);
-            Raylib.DrawTexturePro(_texture, source, dest, origin, 0.0f, Color.White);            
+            Raylib.DrawTexturePro(_texture, source, dest, origin, rotation, Color.White);            
         }
     }
 }
