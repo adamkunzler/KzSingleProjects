@@ -4,19 +4,26 @@
 
 using Kz.IdlePlanetMiner;
 using Raylib_cs;
+using System.Numerics;
 using Color = Raylib_cs.Color;
 
 internal class Program
 {
+    private static Camera2D _camera;
     public static void Main()
     {
         //
         // Initialization
         //
-        var settings = new WindowSettings(1536, 1536, 2);
+        var settings = new WindowSettings(1536, 1536, 1);
 
         Raylib.InitWindow(settings.WindowWidth, settings.WindowHeight, ".: Idle Planet Miner :.");
         Raylib.SetTargetFPS(60);
+
+        _camera.Target = new Vector2(settings.HalfScreenWidth, settings.HalfScreenHeight);
+        _camera.Offset = new Vector2(settings.HalfScreenWidth, settings.HalfScreenHeight);
+        _camera.Rotation = 0.0f;
+        _camera.Zoom = 2.5f;
 
         //
         // Setup Game
@@ -27,7 +34,7 @@ internal class Program
         // MAIN RENDER LOOP
         //
         while (!Raylib.WindowShouldClose())    // Detect window close button or ESC key
-        {
+        {            
             ProcessInputs(settings, game);
 
             Update(settings, game);
@@ -40,14 +47,17 @@ internal class Program
     }
 
     private static void Render(WindowSettings settings, IGame game)
-    {
-        game.Render();
-
+    {        
         Raylib.BeginDrawing();
         Raylib.ClearBackground(Color.Black);
-
-        RenderTextureToWindow(game.Texture, settings.WindowWidth, settings.WindowHeight);
-
+        
+        Raylib.BeginMode2D(_camera);
+        game.Render();        
+        Raylib.EndMode2D();
+        
+        Raylib.DrawFPS(10, 10);
+        Raylib.DrawText($"Zoom: {_camera.Zoom:0.00}", 10, 35, 20, Color.RayWhite);
+        
         Raylib.EndDrawing();
     }
 
@@ -58,6 +68,12 @@ internal class Program
 
     private static void ProcessInputs(WindowSettings settings, IGame game)
     {
+        // Camera zoom controls
+        _camera.Zoom += Raylib.GetMouseWheelMove() * 0.05f;
+        if (_camera.Zoom > 5.0f) _camera.Zoom = 5.0f;
+        else if (_camera.Zoom < 0.5f) _camera.Zoom = 0.5f;
+
+
         if (Raylib.IsKeyPressed(KeyboardKey.Space))
         {
             // do something...

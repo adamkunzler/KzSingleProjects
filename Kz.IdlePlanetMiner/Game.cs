@@ -1,4 +1,8 @@
-﻿using Raylib_cs;
+﻿using Kz.Engine.DataStructures;
+using Kz.Engine.Trigonometry;
+using Raylib_cs;
+using System.Numerics;
+using System.Security.Cryptography;
 
 namespace Kz.IdlePlanetMiner
 {
@@ -6,15 +10,22 @@ namespace Kz.IdlePlanetMiner
     {
         #region ctor
 
-        private WindowSettings _settings;
-        private RenderTexture2D _target;
+        private Random _random = new Random(117);
+        private WindowSettings _settings;        
+                
+        public RenderTexture2D Texture => throw new NotImplementedException();
+        public Texture2D _background;
 
-        public RenderTexture2D Texture => _target;
+        private List<Planet> _planets = [];
 
         public Game(WindowSettings settings)
         {
             _settings = settings;
-            _target = Raylib.LoadRenderTexture(_settings.ScreenWidth, _settings.ScreenHeight);
+
+            // 00 or 04
+            _background = Raylib.LoadTexture("Resources/background_04.png");
+
+            GeneratePlanets(17);
         }
 
         #endregion ctor
@@ -28,24 +39,69 @@ namespace Kz.IdlePlanetMiner
 
         public void Update()
         {
-            // do stuff here
+            foreach(var planet in _planets)
+            {
+                planet.Update();
+            }
         }
 
         public void Render()
         {
-            Raylib.BeginTextureMode(_target);
-            Raylib.ClearBackground(Color.Black);
+            // render background
+            for(var y =-_settings.ScreenWidth; y <= _settings.ScreenWidth; y += _settings.ScreenWidth)
+            {
+                for (var x = -_settings.ScreenWidth; x <= _settings.ScreenWidth; x += _settings.ScreenWidth)
+                {
+                    Raylib.DrawTexture(_background, x, y, Color.White);
+                }
+            }
 
-            Raylib.DrawCircleLines(_settings.HalfScreenWidth, _settings.HalfScreenHeight, 50.0f, Color.Purple);
-
-            Raylib.EndTextureMode();
+            // render planets
+            foreach (var planet in _planets)
+            {
+                planet.Render();
+            }
         }
 
         public void End()
         {
-            Raylib.UnloadRenderTexture(_target);
+            Raylib.UnloadTexture(_background);
         }
 
         #endregion IGame
+
+        private void GeneratePlanets(int numPlanetsToGenerate)
+        {
+            var theta = TrigUtil.DegreesToRadians(45.0f);
+            var magnitude = 250.0f;
+            
+            var numPlanets = 0;
+            var lastPlanetPosition = new Vector2f(_settings.HalfScreenWidth, _settings.HalfScreenHeight);
+            
+            do
+            {
+                var max = 90.0f;
+                var min = max / 2.0f;
+                var randTheta = (float)_random.NextDouble() * TrigUtil.DegreesToRadians(max) - TrigUtil.DegreesToRadians(min);
+                var randMagnitude = (float)_random.NextDouble() * 20.0f - 10.0f;
+
+                theta += TrigUtil.DegreesToRadians(67.5f) + randTheta;
+                magnitude += 50.0f + randMagnitude;
+                
+                var polar = new Vector2f(magnitude, theta);
+                var coord = polar.ToCartesian();
+                
+                var x = coord.X + _settings.HalfScreenWidth;
+                var y = coord.Y + _settings.HalfScreenHeight;
+                
+                var planet = new Planet((uint)numPlanets+1, new Vector2f(x, y));
+                //var planet = new Planet(11, new Vector2f(x, y), radius);
+                _planets.Add(planet);
+
+                lastPlanetPosition = new Vector2f(x, y);
+
+                numPlanets++;
+            } while (numPlanets < numPlanetsToGenerate);
+        }
     }
 }
