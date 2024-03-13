@@ -29,7 +29,7 @@ internal class Program
         _camera.Offset = new Vector2(settings.HalfScreenWidth, settings.HalfScreenHeight);
         _camera.Rotation = 0.0f;
         _camera.Zoom = 2.5f;
-
+                
         //
         // Setup Game
         //
