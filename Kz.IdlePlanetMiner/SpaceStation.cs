@@ -34,8 +34,8 @@ namespace Kz.IdlePlanetMiner
             var origin = new Vector2(_size / 2.0f, _size / 2.0f);
             Raylib.DrawTexturePro(_texture, source, dest, origin, _rotation, Color.White);
 
-            var aabb = GetBoundingCircle();
-            Gfx.DrawCircle(aabb, Color.DarkGreen);
+            //var aabb = GetBoundingCircle();
+            //Gfx.DrawCircle(aabb, Color.DarkGreen);
         }
 
         private Circle GetBoundingCircle()

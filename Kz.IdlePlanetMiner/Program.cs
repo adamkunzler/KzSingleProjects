@@ -58,6 +58,12 @@ internal class Program
 
         Raylib.BeginMode2D(_camera);
         game.Render();
+
+        foreach(var p in Points)
+        {
+            Raylib.DrawCircle((int)p.X, (int)p.Y, 64.0f, Color.Red);
+        }
+
         Raylib.EndMode2D();
 
         Raylib.DrawFPS(10, 10);
@@ -72,7 +78,7 @@ internal class Program
     }
 
     
-
+    private static List<Vector2> Points = new List<Vector2>();
     private static void ProcessInputs(WindowSettings settings, IGame game)
     {        
         #region Camera Zoom
@@ -113,7 +119,15 @@ internal class Program
 
         if (Raylib.IsKeyPressed(KeyboardKey.Space))
         {
-            // do something...
+            var mouse = Raylib.GetMousePosition();
+            var x = ((mouse.X - 768) * 1.0f / _camera.Zoom) + 768;
+            var y = ((mouse.Y - 768) * 1.0f / _camera.Zoom) + 768;
+            Points.Add(new Vector2(x, y));
+            
+        }
+        else if (Raylib.IsKeyPressed(KeyboardKey.Q))
+        {
+            Points.Clear();
         }
 
         game.ProcessInputs();

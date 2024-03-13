@@ -4,6 +4,21 @@ using System.Numerics;
 
 namespace Kz.IdlePlanetMiner
 {
+    public static class TextureManager
+    {
+        private static Dictionary<string, Texture2D> _textures = [];
+
+        public static Texture2D GetTexture(string key)
+        {
+            if(_textures.ContainsKey(key)) return _textures[key];
+
+            var texture = Raylib.LoadTexture(key);
+            _textures.Add(key, texture);
+
+            return texture;
+        }
+    }
+
     public class Sprite
     {
         #region ctor
@@ -26,7 +41,7 @@ namespace Kz.IdlePlanetMiner
             _currentFrame = Vector2f.Zero;
             _frameSpeed = frameSpeed;
 
-            _texture = Raylib.LoadTexture(filename);
+            _texture = TextureManager.GetTexture(filename);
         }
 
         #endregion ctor

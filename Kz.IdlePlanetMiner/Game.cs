@@ -27,7 +27,8 @@ namespace Kz.IdlePlanetMiner
             _background = Raylib.LoadTexture("Resources/background_04.png");
 
             _spaceStation = new SpaceStation(new Vector2f(_settings.HalfScreenWidth, _settings.HalfScreenHeight));
-            GeneratePlanets(7);
+
+            _planets = PlanetManager.GetAllPlanets();
         }
 
         #endregion ctor
@@ -58,7 +59,7 @@ namespace Kz.IdlePlanetMiner
             {
                 for (var x = -xSize; x <= xSize; x += _settings.ScreenWidth)
                 {
-                    Raylib.DrawTexture(_background, (int)x, (int)y, Color.White);
+                    //Raylib.DrawTexture(_background, (int)x, (int)y, Color.White);
                 }
             }
 
@@ -67,7 +68,7 @@ namespace Kz.IdlePlanetMiner
             // render planets
             foreach (var planet in _planets)
             {
-                planet.Render();
+                planet.Render(_settings.HalfScreenWidth, _settings.HalfScreenHeight);
             }
         }
 
@@ -78,38 +79,8 @@ namespace Kz.IdlePlanetMiner
 
         #endregion IGame
 
-        private void GeneratePlanets(int numPlanetsToGenerate)
-        {
-            var theta = TrigUtil.DegreesToRadians(45.0f);
-            var magnitude = 250.0f;
-            
-            var numPlanets = 0;
-            var lastPlanetPosition = new Vector2f(_settings.HalfScreenWidth, _settings.HalfScreenHeight);
-            
-            do
-            {
-                var max = 90.0f;
-                var min = max / 2.0f;
-                var randTheta = (float)_random.NextDouble() * TrigUtil.DegreesToRadians(max) - TrigUtil.DegreesToRadians(min);
-                var randMagnitude = (float)_random.NextDouble() * 20.0f - 10.0f;
+        
 
-                theta += TrigUtil.DegreesToRadians(67.5f) + randTheta;
-                magnitude += 50.0f + randMagnitude;
-                
-                var polar = new Vector2f(magnitude, theta);
-                var coord = polar.ToCartesian();
-                
-                var x = coord.X + _settings.HalfScreenWidth;
-                var y = coord.Y + _settings.HalfScreenHeight;
-                
-                var planet = new Planet((uint)numPlanets+1, new Vector2f(x, y), (float)_random.Next(-360, 360));
-                //var planet = new Planet(11, new Vector2f(x, y), radius);
-                _planets.Add(planet);
-
-                lastPlanetPosition = new Vector2f(x, y);
-
-                numPlanets++;
-            } while (numPlanets < numPlanetsToGenerate);
-        }
+        
     }
 }

@@ -1,0 +1,492 @@
+[
+  {
+    "Planet": "Balor",
+    "UnlockPrice": "100",
+    "Group": "0",
+    "Resources": "Copper",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Drasta",
+    "UnlockPrice": "200",
+    "Group": "0",
+    "Resources": "Copper,Iron",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Anadius",
+    "UnlockPrice": "500",
+    "Group": "0",
+    "Resources": "Copper,Iron",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Dholen",
+    "UnlockPrice": "1.25K",
+    "Group": "0",
+    "Resources": "Iron,Lead",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Verr",
+    "UnlockPrice": "5K",
+    "Group": "1",
+    "Resources": "Lead,Iron,Copper",
+    "Yield": "50,30,20"
+  },
+  {
+    "Planet": "Newton",
+    "UnlockPrice": "9K",
+    "Group": "1",
+    "Resources": "Lead",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Widow",
+    "UnlockPrice": "15K",
+    "Group": "1",
+    "Resources": "Iron,Copper,Silica",
+    "Yield": "40,40,20"
+  },
+  {
+    "Planet": "Acheron",
+    "UnlockPrice": "25K",
+    "Group": "2",
+    "Resources": "Silica,Copper",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Yangtze",
+    "UnlockPrice": "40K",
+    "Group": "2",
+    "Resources": "Silica,Aluminium",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Solveig",
+    "UnlockPrice": "75K",
+    "Group": "2",
+    "Resources": "Aluminium,Silica,Lead",
+    "Yield": "50,30,20"
+  },
+  {
+    "Planet": "Imir",
+    "UnlockPrice": "150K",
+    "Group": "3",
+    "Resources": "Aluminium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Relic",
+    "UnlockPrice": "250K",
+    "Group": "3",
+    "Resources": "Lead,Silica,Silver",
+    "Yield": "45,35,20"
+  },
+  {
+    "Planet": "Nith",
+    "UnlockPrice": "400K",
+    "Group": "3",
+    "Resources": "Silver,Aluminium",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Batalla",
+    "UnlockPrice": "800K",
+    "Group": "4",
+    "Resources": "Copper,Iron,Gold",
+    "Yield": "40,40,20"
+  },
+  {
+    "Planet": "Micah",
+    "UnlockPrice": "1.5M",
+    "Group": "4",
+    "Resources": "Gold,Silver",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Pranas",
+    "UnlockPrice": "3.0M",
+    "Group": "4",
+    "Resources": "Gold",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Castellus",
+    "UnlockPrice": "6M",
+    "Group": "5",
+    "Resources": "Aluminium,Silica,Diamond",
+    "Yield": "40,35,25"
+  },
+  {
+    "Planet": "Gorgon",
+    "UnlockPrice": "12M",
+    "Group": "5",
+    "Resources": "Diamond,Lead",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Parnitha",
+    "UnlockPrice": "25M",
+    "Group": "5",
+    "Resources": "Gold,Platinum",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Orisoni",
+    "UnlockPrice": "50M",
+    "Group": "6",
+    "Resources": "Platinum,Diamond",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Theseus",
+    "UnlockPrice": "100M",
+    "Group": "6",
+    "Resources": "Platinum",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Zelene",
+    "UnlockPrice": "200M",
+    "Group": "6",
+    "Resources": "Silver,Titanium",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Han",
+    "UnlockPrice": "400M",
+    "Group": "7",
+    "Resources": "Titanium,Diamond,Gold",
+    "Yield": "70,20,10"
+  },
+  {
+    "Planet": "Strennus",
+    "UnlockPrice": "800M",
+    "Group": "7",
+    "Resources": "Titanium,Platinum",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Osun",
+    "UnlockPrice": "1.6B",
+    "Group": "7",
+    "Resources": "Aluminium,Iridium",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Ploitari",
+    "UnlockPrice": "3.2B",
+    "Group": "8",
+    "Resources": "Iridium,Diamond",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Elysta",
+    "UnlockPrice": "6.4B",
+    "Group": "8",
+    "Resources": "Iridium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Tikkun",
+    "UnlockPrice": "12.5B",
+    "Group": "8",
+    "Resources": "Iridium,Titanium,Palladium",
+    "Yield": "40,35,25"
+  },
+  {
+    "Planet": "Satent",
+    "UnlockPrice": "25B",
+    "Group": "9",
+    "Resources": "Palladium,Titanium",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Urla Rast",
+    "UnlockPrice": "50B",
+    "Group": "9",
+    "Resources": "Palladium,Diamond",
+    "Yield": "90,10"
+  },
+  {
+    "Planet": "Vular",
+    "UnlockPrice": "100B",
+    "Group": "9",
+    "Resources": "Palladium,Osmium",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Nibiru",
+    "UnlockPrice": "250B",
+    "Group": "10",
+    "Resources": "Osmium,Iridium",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Xena",
+    "UnlockPrice": "600B",
+    "Group": "10",
+    "Resources": "Osmium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Rupert",
+    "UnlockPrice": "1.5T",
+    "Group": "10",
+    "Resources": "Palladium,Osmium,Rhodium",
+    "Yield": "55,30,15"
+  },
+  {
+    "Planet": "Pax",
+    "UnlockPrice": "4T",
+    "Group": "11",
+    "Resources": "Rhodium,Platinum",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Ivyra",
+    "UnlockPrice": "10T",
+    "Group": "11",
+    "Resources": "Rhodium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Utritis",
+    "UnlockPrice": "25T",
+    "Group": "11",
+    "Resources": "Rhodium,Inerton",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Dosie",
+    "UnlockPrice": "62T",
+    "Group": "12",
+    "Resources": "Inerton,Osmium",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Zulu",
+    "UnlockPrice": "160T",
+    "Group": "12",
+    "Resources": "Inerton",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Unicae",
+    "UnlockPrice": "400T",
+    "Group": "12",
+    "Resources": "Inerton,Quadium",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Dune",
+    "UnlockPrice": "1q",
+    "Group": "13",
+    "Resources": "Osmium,Quadium",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Naraka",
+    "UnlockPrice": "2.50q",
+    "Group": "13",
+    "Resources": "Quadium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Daedalus",
+    "UnlockPrice": "6.20q",
+    "Group": "13",
+    "Resources": "Quadium,Inerton,Scrith",
+    "Yield": "60,25,15"
+  },
+  {
+    "Planet": "Clovis",
+    "UnlockPrice": "15q",
+    "Group": "14",
+    "Resources": "Scrith,Quadium",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Zero",
+    "UnlockPrice": "40q",
+    "Group": "14",
+    "Resources": "Scrith",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Sotomi",
+    "UnlockPrice": "100q",
+    "Group": "14",
+    "Resources": "Scrith,Uru",
+    "Yield": "75,25"
+  },
+  {
+    "Planet": "Remidian",
+    "UnlockPrice": "250q",
+    "Group": "15",
+    "Resources": "Uru,Quadium",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Muse",
+    "UnlockPrice": "600q",
+    "Group": "15",
+    "Resources": "Uru",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Arabis",
+    "UnlockPrice": "1.50Q",
+    "Group": "15",
+    "Resources": "Uru,Vibranium",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Vesna",
+    "UnlockPrice": "3.80Q",
+    "Group": "16",
+    "Resources": "Vibranium,Scrith",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Chandra",
+    "UnlockPrice": "10.00Q",
+    "Group": "16",
+    "Resources": "Vibranium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Vega",
+    "UnlockPrice": "25.00Q",
+    "Group": "16",
+    "Resources": "Vibranium,Aether,Rhodium",
+    "Yield": "70,20,10"
+  },
+  {
+    "Planet": "Crius",
+    "UnlockPrice": "60.00Q",
+    "Group": "17",
+    "Resources": "Aether,Scrith",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Singhana",
+    "UnlockPrice": "150.00Q",
+    "Group": "17",
+    "Resources": "Aether",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Zumbia",
+    "UnlockPrice": "360.00Q",
+    "Group": "17",
+    "Resources": "Aether,Vibranium,Viterium",
+    "Yield": "70,20,10"
+  },
+  {
+    "Planet": "Elysium",
+    "UnlockPrice": "900.00Q",
+    "Group": "18",
+    "Resources": "Viterium,Uru",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Nyota",
+    "UnlockPrice": "2.80s",
+    "Group": "18",
+    "Resources": "Viterium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Doral",
+    "UnlockPrice": "7.50s",
+    "Group": "18",
+    "Resources": "Viterium,Aether,Xynium",
+    "Yield": "40,40,20"
+  },
+  {
+    "Planet": "Nikara",
+    "UnlockPrice": "21.00s",
+    "Group": "19",
+    "Resources": "Xynium,Vibranium",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Limbo",
+    "UnlockPrice": "59.00s",
+    "Group": "19",
+    "Resources": "Xynium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Bob",
+    "UnlockPrice": "170.00s",
+    "Group": "19",
+    "Resources": "Xynium,Quolium",
+    "Yield": "70,30"
+  },
+  {
+    "Planet": "Midas",
+    "UnlockPrice": "460.00s",
+    "Group": "20",
+    "Resources": "Quolium,Aether",
+    "Yield": "55,45"
+  },
+  {
+    "Planet": "Antigone",
+    "UnlockPrice": "1.30S",
+    "Group": "20",
+    "Resources": "Quolium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Hecate",
+    "UnlockPrice": "3.90S",
+    "Group": "20",
+    "Resources": "Quolium,Xynium,Luterium",
+    "Yield": "50,25,25"
+  },
+  {
+    "Planet": "Sterop",
+    "UnlockPrice": "11.00S",
+    "Group": "21",
+    "Resources": "Luterium,Quolium",
+    "Yield": "50,50"
+  },
+  {
+    "Planet": "Lavinia",
+    "UnlockPrice": "33.00S",
+    "Group": "21",
+    "Resources": "Luterium",
+    "Yield": "100"
+  },
+  {
+    "Planet": "Ren",
+    "UnlockPrice": "95.00S",
+    "Group": "21",
+    "Resources": "Luterium,Quolium,Wraith",
+    "Yield": "70,20,10"
+  },
+  {
+    "Planet": "Gorgons",
+    "UnlockPrice": "270.00S",
+    "Group": "22",
+    "Resources": "Wraith,Xynium",
+    "Yield": "60,40"
+  },
+  {
+    "Planet": "Pontus",
+    "UnlockPrice": "800.00S",
+    "Group": "22",
+    "Resources": "Wraith,Luterium",
+    "Yield": "80,20"
+  },
+  {
+    "Planet": "Leto",
+    "UnlockPrice": "2.40O",
+    "Group": "22",
+    "Resources": "Wraith",
+    "Yield": "100"
+  }
+]
