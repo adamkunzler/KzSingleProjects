@@ -8,6 +8,8 @@ namespace Kz.IdlePlanetMiner
 
         void Update();
 
+        void PreRender();
+
         void Render();
 
         void ProcessInputs();

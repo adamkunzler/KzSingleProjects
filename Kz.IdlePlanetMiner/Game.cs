@@ -50,19 +50,22 @@ namespace Kz.IdlePlanetMiner
             }
         }
 
-        public void Render()
+        public void PreRender()
         {
             // render background
             var xSize = 4.0f * _settings.ScreenWidth;
             var ySize = 4.0f * _settings.ScreenHeight;
-            for(var y =-ySize; y <= ySize; y += _settings.ScreenHeight)
+            for (var y = -ySize; y <= ySize; y += _settings.ScreenHeight)
             {
                 for (var x = -xSize; x <= xSize; x += _settings.ScreenWidth)
                 {
-                    //Raylib.DrawTexture(_background, (int)x, (int)y, Color.White);
+                    Raylib.DrawTexture(_background, (int)x, (int)y, Color.White);
                 }
             }
+        }
 
+        public void Render()
+        {            
             _spaceStation.Render();
 
             // render planets

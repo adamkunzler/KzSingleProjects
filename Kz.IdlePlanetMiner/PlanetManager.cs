@@ -54,7 +54,7 @@ namespace Kz.IdlePlanetMiner
                 var polar = new Vector2f(magnitude, theta);
                 var coord = polar.ToCartesian();
 
-                planet.Init(planetId, coord, (float)random.Next(-360, 360));
+                planet.Init(planetId++, coord, (float)random.Next(-360, 360));
             }
         }
 

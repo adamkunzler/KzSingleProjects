@@ -28,20 +28,21 @@ namespace Kz.IdlePlanetMiner
 
         public void Init(uint id, Vector2f position, float rotation)
         {
+            var bigImageList = new List<uint> { 7, 17, 27, 37, 47, 57, 67, 39, 53 };
             _id = id;
             _position = position;
             _rotation = rotation;
-            //_sprite = new Sprite(
-            //    $"Resources/Planets/{_id:000}.png",                
-            //    new List<uint> { 6, 9, 11 }.Contains(_id) ? new Vector2f(256, 256) : new Vector2f(128, 128),
-            //    new Vector2f(30, 30),
-            //    1.0f / 30.0f);
-
             _sprite = new Sprite(
-                "Resources/Planets/test.png",
-                new Vector2f(128, 128),
-                new Vector2f(19, 19),
-                1.0f / 30.0f);
+                $"Resources/Planets/{_id:000}.png",                
+                bigImageList.Contains(_id) ? new Vector2f(256, 256) : new Vector2f(128, 128),
+                new Vector2f(12, 12),
+                1.0f / 20.0f);
+
+            //_sprite = new Sprite(
+            //    "Resources/Planets/001.png",
+            //    new Vector2f(128, 128),
+            //    new Vector2f(12, 12),
+            //    1.0f / 20.0f);
         }
 
         public override string ToString()
