@@ -59,11 +59,38 @@ internal class Program
         game.PreRender();
 
         Raylib.BeginMode2D(_camera);
-        game.Render();        
+        game.Render();
+
+        var mouse = Raylib.GetMousePosition();        
+        var mouseWorldPos = Raylib.GetScreenToWorld2D(mouse, _camera);
+        Raylib.DrawCircleLines((int)(mouseWorldPos.X), (int)(mouseWorldPos.Y), 70, Color.Red);
+
+        // do stuff here
+        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+        {
+            var mousePosition = new Vector2f(mouseWorldPos.X, mouseWorldPos.Y);
+
+            foreach (var planet in ((Game)game).Planets)
+            {
+                var px = planet.Position.X;
+                var py = planet.Position.Y;
+
+                                
+                var planetPosition = new Vector2f(px, py);
+
+                var dist2 = (planetPosition - mousePosition ).Magnitude();
+                if (dist2 < planet.Radius)
+                {
+                    Console.WriteLine(planet.Name);
+                }
+            }
+        }
+
         Raylib.EndMode2D();
 
         Raylib.DrawFPS(10, 10);
         Raylib.DrawText($"Zoom: {_camera.Zoom:0.00}", 10, 35, 20, Color.RayWhite);
+        Raylib.DrawText($"Mouse: {mouseWorldPos}", 10, 65, 20, Color.RayWhite);
 
         Raylib.EndDrawing();
     }
@@ -72,15 +99,15 @@ internal class Program
     {
         game.Update();
     }
-       
+
     private static void ProcessInputs(WindowSettings settings, IGame game)
-    {        
+    {
         #region Camera Zoom
 
         var zoomMin = 0.1f;
         var zoomMax = 10.0f;
         var zoomSpeed = Utils.RangeMap(_camera.Zoom, zoomMin, zoomMax, 0.001f, 0.5f);
-        
+
         _camera.Zoom += Raylib.GetMouseWheelMove() * zoomSpeed;
         if (_camera.Zoom > zoomMax) _camera.Zoom = zoomMax;
         else if (_camera.Zoom < zoomMin) _camera.Zoom = zoomMin;
@@ -90,27 +117,27 @@ internal class Program
         #region Camera Pan
 
         // Update
-        if (Raylib.IsMouseButtonPressed(MouseButton.Left))
+        if (Raylib.IsMouseButtonPressed(MouseButton.Right))
         {
             _dragStart = Raylib.GetMousePosition();
             _isDragging = true;
         }
 
-        if (Raylib.IsMouseButtonDown(MouseButton.Left) && _isDragging)
+        if (Raylib.IsMouseButtonDown(MouseButton.Right) && _isDragging)
         {
             var dragEnd = Raylib.GetMousePosition();
-            var dragDelta = Vector2.Subtract(_dragStart, dragEnd) * (1.0f /_camera.Zoom);
+            var dragDelta = Vector2.Subtract(_dragStart, dragEnd) * (1.0f / _camera.Zoom);
             _camera.Target = Vector2.Add(_camera.Target, dragDelta);
             _dragStart = dragEnd;
         }
 
-        if (Raylib.IsMouseButtonReleased(MouseButton.Left))
+        if (Raylib.IsMouseButtonReleased(MouseButton.Right))
         {
             _isDragging = false;
         }
 
         #endregion Camera Pan
-        
-        game.ProcessInputs();
+
+        game.ProcessInputs(_camera.Zoom);
     }
 }

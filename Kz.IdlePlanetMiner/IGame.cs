@@ -12,7 +12,7 @@ namespace Kz.IdlePlanetMiner
 
         void Render();
 
-        void ProcessInputs();
+        void ProcessInputs(float cameraZoom);
 
         void End();
     }

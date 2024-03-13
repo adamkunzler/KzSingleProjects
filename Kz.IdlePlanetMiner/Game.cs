@@ -19,25 +19,28 @@ namespace Kz.IdlePlanetMiner
         private SpaceStation _spaceStation;
         private List<Planet> _planets = [];
 
+        public List<Planet> Planets => _planets;
+
         public Game(WindowSettings settings)
         {
             _settings = settings;
 
             // 00 or 04
-            _background = Raylib.LoadTexture("Resources/background_04.png");
+            _background = Raylib.LoadTexture("Resources/background_00.png");
 
             _spaceStation = new SpaceStation(new Vector2f(_settings.HalfScreenWidth, _settings.HalfScreenHeight));
 
-            _planets = PlanetManager.GetAllPlanets();
+            _planets = PlanetManager.GetAllPlanets(settings.HalfScreenWidth, settings.HalfScreenHeight);
         }
 
         #endregion ctor
 
         #region IGame
 
-        public void ProcessInputs()
+        public void ProcessInputs(float cameraZoom)
         {
-            // do stuff here
+            
+            
         }
 
         public void Update()
@@ -71,7 +74,7 @@ namespace Kz.IdlePlanetMiner
             // render planets
             foreach (var planet in _planets)
             {
-                planet.Render(_settings.HalfScreenWidth, _settings.HalfScreenHeight);
+                planet.Render();
             }
         }
 

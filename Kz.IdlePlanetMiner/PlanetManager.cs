@@ -23,10 +23,10 @@ namespace Kz.IdlePlanetMiner
         /// <summary>
         /// Load and return all the planets
         /// </summary>        
-        public static List<Planet> GetAllPlanets()
+        public static List<Planet> GetAllPlanets(float halfScreenWidth, float halfScreenHeight)
         {
             var planets = LoadPlanetsData();
-            InitPlanets(planets);
+            InitPlanets(planets, halfScreenWidth, halfScreenHeight);
             return planets;
         }
 
@@ -34,7 +34,7 @@ namespace Kz.IdlePlanetMiner
         /// Takes the base planet information from LoadPlanetsData() and adds additional information
         /// via a call to planet.Init()
         /// </summary>        
-        private static void InitPlanets(List<Planet> planets)
+        private static void InitPlanets(List<Planet> planets, float halfScreenWidth, float halfScreenHeight)
         {
             var random = new Random(117);
             var theta = TrigUtil.DegreesToRadians(45.0f);
@@ -53,6 +53,8 @@ namespace Kz.IdlePlanetMiner
 
                 var polar = new Vector2f(magnitude, theta);
                 var coord = polar.ToCartesian();
+                coord.X += halfScreenWidth;
+                coord.Y += halfScreenHeight;
 
                 planet.Init(planetId++, coord, (float)random.Next(-360, 360));
             }

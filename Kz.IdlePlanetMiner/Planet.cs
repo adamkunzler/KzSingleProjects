@@ -10,9 +10,15 @@ namespace Kz.IdlePlanetMiner
         #region ctor
 
         private uint _id = 0;
+        
         private Vector2f _position = Vector2f.Zero;
+        public Vector2f Position => _position;
+        
         private Sprite _sprite = null!;
+        
         private float _rotation = 0.0f;
+
+        public float Radius => 64.0f;
 
         public uint Group { get; init; }
         public string Name { get; init; } = string.Empty;
@@ -37,12 +43,6 @@ namespace Kz.IdlePlanetMiner
                 bigImageList.Contains(_id) ? new Vector2f(256, 256) : new Vector2f(128, 128),
                 new Vector2f(12, 12),
                 1.0f / 20.0f);
-
-            //_sprite = new Sprite(
-            //    "Resources/Planets/001.png",
-            //    new Vector2f(128, 128),
-            //    new Vector2f(12, 12),
-            //    1.0f / 20.0f);
         }
 
         public override string ToString()
@@ -59,13 +59,12 @@ namespace Kz.IdlePlanetMiner
             _sprite.Update();
         }
 
-        public void Render(float halfScreenWidth, float halfScreenHeight)
-        {
-            var toWorld = new Vector2f(_position.X + halfScreenWidth, _position.Y + halfScreenHeight);
-            _sprite.Render(toWorld, _rotation);
+        public void Render()
+        {                        
+            _sprite.Render(_position, _rotation);
 
             var halfWidth = (Name.Length * 20.0f) / 4.0f;
-            Raylib_cs.Raylib.DrawText(Name, (int)toWorld.X - (int)halfWidth, (int)toWorld.Y - 100, 20, Raylib_cs.Color.Red);
+            Raylib_cs.Raylib.DrawText(Name, (int)_position.X - (int)halfWidth, (int)_position.Y - 100, 20, Raylib_cs.Color.RayWhite);
         }
 
         #endregion Public Methods
