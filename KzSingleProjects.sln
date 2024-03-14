@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kz.IdlePlanetMiner", "Kz.IdlePlanetMiner\Kz.IdlePlanetMiner.csproj", "{33E78E0E-D174-4FA0-A3EC-1F8F9D340DBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kz.IdlePlanetMiner", "Kz.IdlePlanetMiner\Kz.IdlePlanetMiner.csproj", "{33E78E0E-D174-4FA0-A3EC-1F8F9D340DBA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scratch.RayTracer", "ComputerGraphicsFromScratch\Scratch.RayTracer\Scratch.RayTracer.csproj", "{11850462-456E-4FEF-B8FF-3553F87658BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{33E78E0E-D174-4FA0-A3EC-1F8F9D340DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E78E0E-D174-4FA0-A3EC-1F8F9D340DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33E78E0E-D174-4FA0-A3EC-1F8F9D340DBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11850462-456E-4FEF-B8FF-3553F87658BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11850462-456E-4FEF-B8FF-3553F87658BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11850462-456E-4FEF-B8FF-3553F87658BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11850462-456E-4FEF-B8FF-3553F87658BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
