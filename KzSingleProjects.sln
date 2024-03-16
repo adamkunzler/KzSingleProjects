@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kz.IdlePlanetMiner", "Kz.Id
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scratch.RayTracer", "ComputerGraphicsFromScratch\Scratch.RayTracer\Scratch.RayTracer.csproj", "{11850462-456E-4FEF-B8FF-3553F87658BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scratch.Rasterizer", "Scratch.Rasterizer\Scratch.Rasterizer.csproj", "{3F72E2D3-657C-4BA8-BC37-F9A427B8D7F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{11850462-456E-4FEF-B8FF-3553F87658BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11850462-456E-4FEF-B8FF-3553F87658BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11850462-456E-4FEF-B8FF-3553F87658BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F72E2D3-657C-4BA8-BC37-F9A427B8D7F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F72E2D3-657C-4BA8-BC37-F9A427B8D7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F72E2D3-657C-4BA8-BC37-F9A427B8D7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F72E2D3-657C-4BA8-BC37-F9A427B8D7F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
