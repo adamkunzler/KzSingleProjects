@@ -41,10 +41,11 @@ namespace Scratch.Rasterizer
             Raylib.DrawPixel((int)coords.X, (int)coords.Y, color.ToColor());
         }
 
+        private Color _backgroundColor = new Color(41, 37, 33, 255);
         public void BeginRendering()
         {
             Raylib.BeginTextureMode(_target);
-            Raylib.ClearBackground(Color.Black);
+            Raylib.ClearBackground(_backgroundColor);
         }
 
         public void EndRendering()

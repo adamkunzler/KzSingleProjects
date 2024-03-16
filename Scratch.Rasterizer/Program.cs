@@ -12,7 +12,7 @@ internal class Program
     {
         var screenWidth = 1024;
         var screenHeight = 1024;
-        var scale = 4;
+        var scale = 2;
 
         //
         // Initialization
