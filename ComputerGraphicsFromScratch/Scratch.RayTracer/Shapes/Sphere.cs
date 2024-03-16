@@ -10,11 +10,18 @@ namespace Scratch.RayTracer.Shapes
 
         public RGBColor Color { get; init; }
 
-        public Sphere(Vector3f center, float radius, RGBColor color)
+        public float Specular { get; init; }
+
+        public float Reflective { get; init; }
+
+
+        public Sphere(Vector3f center, float radius, RGBColor color, float specular, float reflective)
         {
             Center = center;
             Radius = radius;
             Color = color;
+            Specular = specular;
+            Reflective = reflective;
         }
 
         public Vector3f GetNormal(Vector3f point)
@@ -32,7 +39,7 @@ namespace Scratch.RayTracer.Shapes
             var b = 2.0f * centerCamera.Dot(direction);
             var c = centerCamera.Dot(centerCamera) - (r * r);
 
-            var discriminant = (b * b) - (4 * a * c);
+            var discriminant = (b * b) - (4.0f * a * c);
             if (discriminant < 0)
             {
                 return (float.PositiveInfinity, float.PositiveInfinity);

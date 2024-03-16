@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="Kz.Engine">
-      <HintPath>..\..\_gitrepos\KzEngine\bin\Kz.Engine.dll</HintPath>
+      <HintPath>..\..\..\KzEngine\bin\Kz.Engine.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -14,7 +14,7 @@ internal class Program
     {
         var screenWidth = 1024;
         var screenHeight = 1024;
-        var scale = 4;
+        var scale = 2;
 
         //
         // Initialization
@@ -79,12 +79,12 @@ internal class Program
         scene.Lights.Add(new Scratch.RayTracer.Lights.DirectionalLight(0.2f, new Vector3f(1.0f, 4.0f, 4.0f)));
 
         // "sun"
-        scene.Spheres.Add(new Sphere(new Vector3f(0, -5001.0f, 0.0f), 5000, new RGBColor(245, 245, 245)));
+        scene.Spheres.Add(new Sphere(new Vector3f(0, -5001.0f, 0.0f), 5000, new RGBColor(255, 255, 0), 1000.0f, 0.8f));
 
         // objects
-        scene.Spheres.Add(new Sphere(new Vector3f(0, -1, 5), 1, new RGBColor(255, 0, 0)));
-        scene.Spheres.Add(new Sphere(new Vector3f(2, 0, 6), 1, new RGBColor(0, 0, 255)));
-        scene.Spheres.Add(new Sphere(new Vector3f(-2, 0, 6), 1, new RGBColor(0, 255, 0)));
+        scene.Spheres.Add(new Sphere(new Vector3f(0, -1, 5), 1, new RGBColor(255, 0, 0), 500.0f, 0.2f));
+        scene.Spheres.Add(new Sphere(new Vector3f(2, 0, 6), 1, new RGBColor(0, 0, 255), 500.0f, 0.3f));
+        scene.Spheres.Add(new Sphere(new Vector3f(-2, 0, 6), 1, new RGBColor(0, 255, 0), 10.0f, 0.4f));
 
         return scene;
     }

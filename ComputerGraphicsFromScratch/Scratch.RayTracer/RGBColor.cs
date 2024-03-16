@@ -39,6 +39,8 @@ namespace Scratch.RayTracer
                 (byte)Clamp(lhs.B + rhs.B));
         }
 
+        public static RGBColor operator +(RGBColor lhs, RGBColor rhs) => Add(lhs, rhs);
+
         public static RGBColor Multiply(float lhs, RGBColor rhs)
         {
             return new RGBColor(

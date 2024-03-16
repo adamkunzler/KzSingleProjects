@@ -1,4 +1,5 @@
 ﻿using Kz.Engine.DataStructures;
+using Kz.Engine.Geometry2d.Utils;
 using Raylib_cs;
 using Scratch.RayTracer.Lights;
 using Scratch.RayTracer.Shapes;
@@ -38,7 +39,7 @@ namespace Scratch.RayTracer
                 for (var x = _canvas.Left; x < _canvas.Right; x++)
                 {
                     var direction = CanvasToViewPort(x, y);
-                    var color = TraceRay(direction, 1.0f, float.MaxValue);
+                    var color = TraceRay(_camera, direction, 1.0f, float.MaxValue, 3);
                     _canvas.PutPixel(x, y, color);
                 }
             }
@@ -53,14 +54,40 @@ namespace Scratch.RayTracer
 
         #region Rendering
 
-        private RGBColor TraceRay(Vector3f direction, float tMin, float tMax)
+        private RGBColor TraceRay(Vector3f start, Vector3f direction, float tMin, float tMax, int recursiveDepth)
+        {
+            var intersection = ClosestIntersection(start, direction, tMin, tMax);
+            if (intersection.ClosestSphere == null) return BACKGROUND_COLOR;
+
+            var intersectionPoint = start + (intersection.ClosestT * direction);
+            var normal = intersection.ClosestSphere.GetNormal(intersectionPoint);
+            
+            var lightIntensity = ComputeLighting(intersectionPoint, normal, -1.0f * direction, intersection.ClosestSphere.Specular, tMax);
+            var localColor = intersection.ClosestSphere.Color * lightIntensity;
+            
+            // recursion limit
+            var reflective = intersection.ClosestSphere.Reflective;
+            if(recursiveDepth <= 0 || reflective <= 0)
+            {
+                return localColor;
+            }
+
+            // reflections
+            var reflectRay = ReflectRay(-1.0f * direction, normal);
+            var reflectedColor = TraceRay(intersectionPoint, direction, 0.001f, float.PositiveInfinity, recursiveDepth - 1);
+
+            return localColor * (1.0f - reflective) + (reflectedColor * reflective);
+                
+        }
+        
+        private (Sphere ClosestSphere, float ClosestT) ClosestIntersection(Vector3f start, Vector3f direction, float tMin, float tMax)
         {
             var closestT = float.PositiveInfinity;
             Sphere closestSphere = null!;
 
             foreach (var sphere in _scene.Spheres)
             {
-                var intersections = sphere.Intersect(_camera, direction);
+                var intersections = sphere.Intersect(start, direction);
 
                 if (intersections.T1 >= tMin && intersections.T1 <= tMax && intersections.T1 < closestT)
                 {
@@ -75,28 +102,35 @@ namespace Scratch.RayTracer
                 }
             }
 
-            if (closestSphere == null) return BACKGROUND_COLOR;
-
-            var intersectionPoint = _camera + (closestT * direction);
-            var normal = closestSphere.GetNormal(intersectionPoint);
-            var lightIntensity = ComputeLighting(intersectionPoint, normal);
-            var color = closestSphere.Color * lightIntensity;
-            return color;
-                
+            return (closestSphere, closestT);
         }
 
-        private float ComputeLighting(Vector3f intersection, Vector3f normal)
+        private Vector3f ReflectRay(Vector3f ray, Vector3f normal)
+        {
+            var reflect = 2.0f * normal * normal.Dot(ray) - ray;
+            return reflect;
+        }
+
+        /// <summary>
+        /// Calculate the amount of light at an intersection point
+        /// </summary>
+        /// <param name="intersection">the point of intersection on the shape</param>
+        /// <param name="normal">the normal at the point of intersection</param>
+        /// <param name="direction">the direction of the point of intersection to the light</param>
+        /// <param name="specular">the amount of specular light</param>
+        /// <returns>total amount of light at the intersection point</returns>
+        private float ComputeLighting(Vector3f intersection, Vector3f normal, Vector3f direction, float specular, float tMax)
         {
             var intensity = 0.0f;
             var lightVector = Vector3f.Zero; // intersection point to light
             var n_dot_l = -1.0f;
-
+            
             foreach (var light in _scene.Lights)
             {
                 switch (light)
                 {
                     case AmbientLight l:
-                        intensity += l.Intensity;
+                        intensity += l.Intensity;                        
                         break;
 
                     case PointLight l:
@@ -110,11 +144,30 @@ namespace Scratch.RayTracer
                         break;
                 }
 
+                // shadow
+                var shadowIntersection = ClosestIntersection(intersection, lightVector, 0.001f, tMax);
+                if (shadowIntersection.ClosestSphere != null && light is not AmbientLight)
+                {
+                    continue;
+                }
+                
+                // diffuse
                 if(n_dot_l > 0.0f)
                 {
                     intensity += light.Intensity * n_dot_l / (normal.Magnitude() * lightVector.Magnitude());
                 }
-            }
+
+                // specular
+                if(specular != -1.0f && light is not AmbientLight)
+                {
+                    var reflect = ReflectRay(lightVector, normal);
+                    var r_dot_v = reflect.Dot(direction);
+                    if(r_dot_v > 0.0f)
+                    {
+                        intensity += light.Intensity * MathF.Pow(r_dot_v / (reflect.Magnitude() * direction.Magnitude()), specular);
+                    }
+                }
+            } // end foreach light
 
             return intensity;
         }
