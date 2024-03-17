@@ -6,11 +6,15 @@
         public float Height { get; init; }
         public float DistanceToCamera { get; init; }
 
-        public ViewPort()
+        public ViewPort() : this(1.0f, 1.0f, 1.0f)
         {
-            Width = 1.0f;
-            Height = 1.0f;
-            DistanceToCamera = 1.0f;
+        }
+
+        public ViewPort(float width, float height, float distanceToCamera)
+        {
+            Width = width;
+            Height = height;
+            DistanceToCamera = distanceToCamera;
         }
     }
 }

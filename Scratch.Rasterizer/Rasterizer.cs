@@ -1,9 +1,12 @@
 ﻿using Kz.Engine.DataStructures;
 using Raylib_cs;
+using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 
 namespace Scratch.Rasterizer
 {
+    public record TriangleRef(int v0, int v1, int v2, RGBColor color);
+
     public class Rasterizer
     {
         public static readonly RGBColor BACKGROUND_COLOR = new RGBColor(0, 0, 0);
@@ -16,9 +19,9 @@ namespace Scratch.Rasterizer
 
         public Rasterizer(int screenWidth, int screenHeight, int scale)
         {
-            _canvas = new Canvas(screenWidth / scale, screenHeight / scale);
+            _canvas = new Canvas(screenWidth / scale, screenHeight / scale);            
+            _viewport = new ViewPort(1.0f, 1.0f, 1.0f);
             _camera = new Vector3f(0, 0, 0);
-            _viewport = new ViewPort();
         }
 
         public void Update()
@@ -28,11 +31,26 @@ namespace Scratch.Rasterizer
         private RGBColor _yellow = new RGBColor(245, 174, 45);
         private RGBColor _green = new RGBColor(80, 148, 82);
         private RGBColor _black = new RGBColor(29, 27, 24);
+        
+        private RGBColor _red = new RGBColor(255, 0, 0);
+        private RGBColor _green2 = new RGBColor(0, 255, 0);
+        private RGBColor _blue = new RGBColor(0, 0, 255);
+        private RGBColor _yellow2 = new RGBColor(255, 255, 0);
+        private RGBColor _purple = new RGBColor(255, 0, 255);
+        private RGBColor _cyan = new RGBColor(0, 255, 255);
 
         public void Render()
         {
             _canvas.BeginRendering();
 
+            //DemoShadedTriangle();
+            DemoRenderCube();
+            
+            _canvas.EndRendering();
+        }
+
+        private void DemoShadedTriangle()
+        {
             var p0 = new Vector2f(-200, -250);
             var p1 = new Vector2f(200, 50);
             var p2 = new Vector2f(20, 250);
@@ -40,14 +58,53 @@ namespace Scratch.Rasterizer
 
             DrawTriangleShaded(p0, p1, p2, 0.25f, 0.1f, 1.0f, _green);
             //DrawTriangleLines(p0, p1, p2, _yellow);
+            //DrawTriangle(p0, p1, p2, _yellow);
+        }
 
-            _canvas.EndRendering();
+        private void DemoRenderCube()
+        {
+            // define vertices
+            var v0 = new Vector3f(1, 1, 1);
+            var v1 = new Vector3f(-1, 1, 1);
+            var v2 = new Vector3f(-1, -1, 1);
+            var v3 = new Vector3f(1, -1, 1);
+            var v4 = new Vector3f(1, 1, -1);
+            var v5 = new Vector3f(-1, 1, -1);
+            var v6 = new Vector3f(-1, -1, -1);
+            var v7 = new Vector3f(1, -1, -1);
+            var vertices = new List<Vector3f> { v0, v1, v2,v3,v4, v5, v6, v7 };
+
+            // define triangles and colors
+            var t0 = new TriangleRef(0, 1, 2, _red);
+            var t1 = new TriangleRef(0, 2, 3, _red);
+            var t2 = new TriangleRef(4, 0, 3, _green2);
+            var t3 = new TriangleRef(4, 3, 7, _green2);
+            var t4 = new TriangleRef(5, 4, 7, _blue);
+            var t5 = new TriangleRef(5, 7, 6, _blue);
+            var t6 = new TriangleRef(1, 5, 6, _yellow2);
+            var t7 = new TriangleRef(1, 6, 2, _yellow2);
+            var t8 = new TriangleRef(4, 5, 1, _purple);
+            var t9 = new TriangleRef(4, 1, 0, _purple);
+            var t10 = new TriangleRef(2, 6, 7, _cyan);
+            var t11 = new TriangleRef(2, 7, 3, _cyan);
+            var triangles = new List<TriangleRef> { t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11 };
+
+            // translate to the left
+            var translation = new Vector3f(-1.5f, 0.0f, 7.0f);
+            for(var i = 0; i < vertices.Count; i++)
+            {
+                vertices[i] += translation;
+            }
+
+            RenderObject(vertices, triangles);
         }
 
         public void CleanUp()
         {
             _canvas.CleanUp();
         }
+
+        #region Camera/Screen/World
 
         /// <summary>
         /// Convert canvas coordinates to viewport coordinates
@@ -59,10 +116,28 @@ namespace Scratch.Rasterizer
             var vz = _viewport.DistanceToCamera;
 
             return new Vector3f(vx, vy, vz);
+        }        
+        
+        private Vector2f ViewportToCanvas(Vector2f vertex)
+        {
+            Vector2f canvasCoords;
+            canvasCoords.X = vertex.X * (_canvas.Width / _viewport.Width);
+            canvasCoords.Y = vertex.Y * (_canvas.Height/ _viewport.Height);
+            return canvasCoords;
         }
 
-        #region Drawing Things
-        
+        private Vector2f ProjectVertex(Vector3f vertex)
+        {
+            Vector2f projection;
+            projection.X = vertex.X * _viewport.DistanceToCamera / vertex.Z;
+            projection.Y = vertex.Y * _viewport.DistanceToCamera / vertex.Z;
+            return ViewportToCanvas(projection);
+        }
+
+        #endregion Camera/Screen/World
+
+        #region Utils
+
         private T[] RemoveLastElement<T>(T[] source)
         {
             var result = new T[source.Length - 1];
@@ -80,7 +155,11 @@ namespace Scratch.Rasterizer
             return result;
         }
 
-        private float[] Interpolate(float independent0, float dependant0, float independent1, float dependant1)
+        private float[] Interpolate
+        (
+            float independent0, float dependant0, 
+            float independent1, float dependant1            
+        )
         {
             if(independent0 == independent1) 
             {
@@ -94,12 +173,40 @@ namespace Scratch.Rasterizer
 
             var index = 0;
             for (var i = independent0; i <= independent1; i++)
-            {
+            {                
                 values[index++] = d;
                 d += a;
             }
 
             return values;
+        }
+
+        #endregion Utils
+
+        #region Drawing Things
+
+        private void RenderObject(List<Vector3f> vertices, List<TriangleRef> triangles)
+        {
+            var projected = new List<Vector2f>();
+            foreach(var v in vertices)
+            {
+                projected.Add(ProjectVertex(v));
+            }
+
+            foreach(var t in triangles)
+            {
+                RenderTriangle(t, projected);
+            }
+        }
+
+        private void RenderTriangle(TriangleRef triangle, List<Vector2f> projectedVertices)
+        {
+            DrawTriangleLines(
+                projectedVertices[triangle.v0],
+                projectedVertices[triangle.v1],
+                projectedVertices[triangle.v2],
+                triangle.color
+            );
         }
 
         private void DrawLine(Vector2f p0, Vector2f p1, RGBColor color)
@@ -156,7 +263,7 @@ namespace Scratch.Rasterizer
             var x02 = Interpolate(p0.Y, p0.X, p2.Y, p2.X);
 
             // cleanup repeated x-value
-            x01 = RemoveLastElement(x01);
+            //x01 = RemoveLastElement(x01);
             var x012 = CombineArrays(x01, x12);
 
             // choose x-left and x-right
@@ -197,10 +304,10 @@ namespace Scratch.Rasterizer
             var h02 = Interpolate(p0.Y, h0, p2.Y, h2);
 
             // cleanup repeated values
-            x01 = RemoveLastElement(x01);
+            //x01 = RemoveLastElement(x01);
             var x012 = CombineArrays(x01, x12);
 
-            h01 = RemoveLastElement(h01);
+            //h01 = RemoveLastElement(h01);
             var h012 = CombineArrays(h01, h12);
 
             // choose x-left and x-right
